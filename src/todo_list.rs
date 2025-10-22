@@ -17,7 +17,7 @@ pub fn TodoList() -> Element {
         div {
             h1 { "Todo List" }
             InputSection { add_todo }
-            TodosSection {}
+            TodosSection { todos: todos.read().clone() }
         }
     }
 }

@@ -1,14 +1,20 @@
 use dioxus::prelude::*;
 
+use crate::todo_list::TodosType;
+
+#[derive(PartialEq, Clone, Props)]
+pub struct TodosSectionProps {
+    pub todos: TodosType,
+}
+
 #[component]
-pub fn TodosSection() -> Element {
-    let todos = vec!["Todo 1", "Todo 2", "Todo 3"];
+pub fn TodosSection(props: TodosSectionProps) -> Element {
     rsx! {
         div {
             h2 { "Todos" }
             ul {
-                {todos.iter().map(|todo| rsx! {
-                    li { "{todo}" }
+                {props.todos.iter().map(|todo| rsx! {
+                    li { key: todo.id, {todo.title.as_str()} }
                 })}
             }
         }
