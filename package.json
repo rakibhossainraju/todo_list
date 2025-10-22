@@ -1,0 +1,16 @@
+{
+  "name": "todo_list",
+  "version": "1.0.0",
+  "description": "Todo List APP for Web And Desktop",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "watch:css": "tailwindcss -i ./input.css -o ./assets/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^4.1.15",
+    "@tailwindcss/cli": "^4.1.15"
+  }
+}
