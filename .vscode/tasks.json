@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Add Current File to mod.rs",
+      "type": "shell",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/add_to_mod.py",
+        "${file}"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": false,
+        "close": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
