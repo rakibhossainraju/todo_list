@@ -5,7 +5,6 @@ Usage: python add_to_mod.py <filepath>
 """
 
 import sys
-import os
 from pathlib import Path
 
 def snake_to_module_name(filename):
@@ -20,19 +19,30 @@ def add_to_mod_file(file_path):
         print(f"Error: {file_path} is not a valid Rust file")
         return False
     
-    # Don't add mod.rs, main.rs, or lib.rs to themselves
-    if file_path.name in ['mod.rs', 'main.rs', 'lib.rs']:
+    # If it's main.rs or lib.rs, don't add it
+    if file_path.name in ['main.rs', 'lib.rs']:
         print(f"Skipping {file_path.name} - no need to add to mod")
         return False
     
-    module_name = snake_to_module_name(file_path.name)
-    parent_dir = file_path.parent
+    # For mod.rs files, we need to add them to the parent scope
+    is_mod_file = file_path.name == 'mod.rs'
     
-    # Check for mod.rs in the same directory
+    module_name = snake_to_module_name(file_path.name) if not is_mod_file else file_path.parent.name
+    
+    if is_mod_file:
+        # For mod.rs, look in the parent directory
+        parent_dir = file_path.parent.parent
+        target_dir_name = file_path.parent.name
+    else:
+        parent_dir = file_path.parent
+        target_dir_name = None
+    
+    
+    # Check for mod.rs in the parent directory
     mod_file = parent_dir / 'mod.rs'
     
     if not mod_file.exists():
-        # If no mod.rs, check if we're in src/ and should add to main.rs or lib.rs
+        # If no mod.rs, check if we're in or need to look at src/ directory
         if parent_dir.name == 'src':
             main_file = parent_dir / 'main.rs'
             lib_file = parent_dir / 'lib.rs'
