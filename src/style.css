@@ -1,6 +1,14 @@
 body {
-    background-color: #0f1116;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
+  background-color: #0f1116;
+  color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100lvh;
+  width: 100lvw;
+}
+.bg-dots {
+  background: #181c24 radial-gradient(#bfc0c12f 7.2%, transparent 0);
+  background-size: 25px 25px;
 }
