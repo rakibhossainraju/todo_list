@@ -10,7 +10,7 @@ pub struct TodosSectionProps {
 #[component]
 pub fn TodosSection(props: TodosSectionProps) -> Element {
     rsx! {
-        div {
+        div { class: "todos-section",
             h2 { "Todos" }
             ul {
                 {props.todos.iter().map(|todo| rsx! {

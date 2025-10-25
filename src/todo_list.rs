@@ -12,7 +12,7 @@ pub fn TodoList() -> Element {
     };
 
     rsx! {
-        div {
+        div { class: "bg-dots p-10 min-w-[550px] min-h-[600px] max-h-[700px] overflow-auto rounded-xl",
             h1 { "Todo List" }
             InputSection { add_todo }
             TodosSection { todos }
