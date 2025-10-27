@@ -1,9 +1,6 @@
 use crate::components::Todo;
 use dioxus::prelude::*;
 
-// pub struct CounterProps {
-//     modify: Callback<u32, u32>,
-// }
 #[derive(PartialEq, Clone, Props)]
 pub struct InputSectionProps {
     pub add_todo: Callback<Todo>,
