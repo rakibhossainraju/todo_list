@@ -4078,7 +4078,10 @@ name = "todo_list"
 version = "0.1.0"
 dependencies = [
  "dioxus",
+ "serde",
+ "serde_json",
  "uuid",
+ "web-sys",
 ]
 
 [[package]]
