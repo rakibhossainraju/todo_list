@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::todo_list::TodosType;
+use crate::models::TodosType;
 
 #[derive(PartialEq, Clone, Props)]
 pub struct TodosSectionProps {
