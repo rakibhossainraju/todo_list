@@ -1,12 +1,13 @@
 use dioxus::{logger::tracing::info, prelude::*};
 
-use crate::components::Todo;
+use crate::{components::Todo, models::persist_storage::PersistStorage};
 
 pub type TodosType = Signal<Vec<Todo>>;
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct Todos {
     todos: TodosType,
+    storage: PersistStorage,
 }
 
 impl Todos {
@@ -14,8 +15,9 @@ impl Todos {
 
     pub fn new() -> Self {
         info!("Creating new Todos instance");
-        let todos = Signal::new(Self::load_todos_from_storage());
-        Todos { todos }
+        let storage = PersistStorage::new();
+        let todos = Signal::new(Self::load_todos_from_storage(&storage));
+        Todos { todos, storage }
     }
 
     pub fn add_todo(&mut self, todo: Todo) {
@@ -28,45 +30,13 @@ impl Todos {
     }
 
     fn add_todo_to_storage(&self) {
-        #[cfg(feature = "web")]
-        {
-            let todos_ref = self.todos.read();
-            storage_web::save(Self::LOCAL_STORAGE_KEY, &*todos_ref);
-        }
+        let todos_ref = self.todos.read();
+        self.storage.save(Self::LOCAL_STORAGE_KEY, &*todos_ref);
     }
-    fn load_todos_from_storage() -> Vec<Todo> {
-        #[cfg(feature = "web")]
-        {
-            if let Some(loaded_todos) = storage_web::load::<Vec<Todo>>(Self::LOCAL_STORAGE_KEY) {
-                return loaded_todos;
-            }
+    fn load_todos_from_storage(storage: &PersistStorage) -> Vec<Todo> {
+        if let Some(loaded_todos) = storage.load::<Vec<Todo>>(Self::LOCAL_STORAGE_KEY) {
+            return loaded_todos;
         }
         Vec::new()
-    }
-}
-
-// #[cfg(feature = "web")]
-mod storage_web {
-    use serde_json;
-    use web_sys::{window, Storage};
-
-    fn get_local_storage() -> Storage {
-        window()
-            .expect("Could not get the window")
-            .local_storage()
-            .expect("Could not get local storage")
-            .expect("Local storage is not available")
-    }
-
-    pub fn save<T: serde::Serialize>(key: &str, value: &T) {
-        let storage = get_local_storage();
-        let value_str = serde_json::to_string(value).expect("Could not serialize value");
-        storage.set_item(key, &value_str).expect("Could not set item in local storage");
-    }
-
-    pub fn load<T: serde::de::DeserializeOwned>(key: &str) -> Option<T> {
-        let storage = get_local_storage();
-        let value = storage.get_item(key).ok()??;
-        serde_json::from_str(&value).ok()
     }
 }
