@@ -1,6 +1,6 @@
 use dioxus::{logger::tracing::info, prelude::*};
 
-use crate::{components::Todo, storage::PersistStorage};
+use crate::{models::Todo, storage::PersistStorage};
 
 pub type TodosType = Signal<Vec<Todo>>;
 

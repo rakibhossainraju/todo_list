@@ -1,4 +1,7 @@
-use crate::{components::*, models::Todos};
+use crate::{
+    components::*,
+    models::{Todo, Todos},
+};
 use dioxus::prelude::*;
 
 #[component]

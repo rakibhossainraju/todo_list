@@ -1,5 +1,6 @@
-use crate::components::Todo;
 use dioxus::prelude::*;
+
+use crate::models::Todo;
 
 #[derive(PartialEq, Clone, Props)]
 pub struct InputSectionProps {
