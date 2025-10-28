@@ -1,6 +1,9 @@
 use dioxus::{logger::tracing::info, prelude::*};
 
-use crate::{components::Todo, models::PersistStorage};
+use crate::{
+    components::Todo,
+    models::{PersistStorage, StorageHandlers},
+};
 
 pub type TodosType = Signal<Vec<Todo>>;
 
@@ -33,6 +36,7 @@ impl Todos {
         let todos_ref = self.todos.read();
         self.storage.save(Self::LOCAL_STORAGE_KEY, &*todos_ref);
     }
+
     fn load_todos_from_storage(storage: &PersistStorage) -> Vec<Todo> {
         if let Some(loaded_todos) = storage.load::<Vec<Todo>>(Self::LOCAL_STORAGE_KEY) {
             return loaded_todos;
