@@ -1,6 +1,7 @@
 mod components;
-mod todo_list;
 mod models;
+mod storage;
+mod todo_list;
 
 use dioxus::prelude::*;
 use todo_list::TodoList;
