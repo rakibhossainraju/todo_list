@@ -26,7 +26,6 @@ fn main() {
                 .with_decorations(true),
         );
         dioxus_desktop::launch::launch_virtual_dom(VirtualDom::new(App), desktop_config);
-        return;
     }
 
     #[cfg(feature = "web")]
