@@ -30,7 +30,11 @@ impl PersistStorage {
 
             return Self { _marker: PhantomData };
         }
-        panic!("No platform feature (web/desktop) enabled for PersistStorage");
+
+        #[cfg(not(any(feature = "web", feature = "desktop")))]
+        {
+            panic!("No platform feature (web/desktop) enabled for PersistStorage");
+        }
     }
 
     pub fn load<T: DeserializeOwned>(&self, key: &str) -> Option<T> {
@@ -40,7 +44,10 @@ impl PersistStorage {
         #[cfg(feature = "desktop")]
         return desktop_storage::load(key);
 
-        panic!("No platform feature (web/desktop) enabled for PersistStorage");
+        #[cfg(not(any(feature = "web", feature = "desktop")))]
+        {
+            panic!("No platform feature (web/desktop) enabled for PersistStorage");
+        }
     }
 
     pub fn save<T: Serialize>(&self, key: &str, value: &T) {
@@ -50,6 +57,9 @@ impl PersistStorage {
         #[cfg(feature = "desktop")]
         return desktop_storage::save(key, value);
 
-        panic!("No platform feature (web/desktop) enabled for PersistStorage");
+        #[cfg(not(any(feature = "web", feature = "desktop")))]
+        {
+            panic!("No platform feature (web/desktop) enabled for PersistStorage");
+        }
     }
 }
